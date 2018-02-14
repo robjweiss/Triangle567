@@ -10,6 +10,8 @@ The primary goal of this file is to demonstrate a simple python program to class
 @author: rjw
 """
 
+import math
+
 def classifyTriangle(a,b,c):
     """
     Your correct code goes here...  Fix the faulty logic below until the code passes all of
@@ -30,14 +32,17 @@ def classifyTriangle(a,b,c):
 
     # require that the input values be >= 0 and <= 200
     if a > 200 or b > 200 or c > 200:
+        print('The values specified are too large')
         return 'InvalidInput'
 
     if a <= 0 or b <= 0 or c <= 0:
+        print('The values specified are too small or negative')
         return 'InvalidInput'
 
     # verify that all 3 inputs are integers
     # Python's "isinstance(object,type) returns True if the object is of the specified type
-    if not(isinstance(a,int) and isinstance(b,int) and isinstance(c,int)):
+    if not(isinstance(a,(float, int)) and isinstance(b,(float, int)) and isinstance(c,(float, int))):
+        print('Please enter real numbers only')
         return 'InvalidInput';
 
     # This information was not in the requirements spec but
@@ -45,14 +50,37 @@ def classifyTriangle(a,b,c):
     # the sum of any two sides must be strictly less than the third side
     # of the specified shape is not a triangle
     if (a >= (b + c)) or (b >= (a + c)) or (c >= (a + b)):
+        print('The sides entered do not form a valid triangle')
         return 'NotATriangle'
 
     # now we know that we have a valid triangle
     if a == b and b == c:
+        print('Equilateral Triangle')
         return 'Equilateral'
-    elif (((a ** 2) + (b ** 2)) == (c ** 2)) or (((a ** 2) + (c ** 2)) == (b ** 2)) or (((c ** 2) + (b ** 2)) == (a ** 2)):
-        return 'Right'
-    elif (a != b) and  (b != c) and (a != c):
+
+    if (math.isclose(((a ** 2) + (b ** 2)), (c ** 2), abs_tol = .01) or math.isclose(((a ** 2) + (c ** 2)), (b ** 2), abs_tol = .01) or math.isclose(((c ** 2) + (b ** 2)), (a ** 2), abs_tol = .01)):
+        if (a != b) and  (b != c) and (a != c):
+            print('Right Scalene Triangle')
+            return 'Right Scalene'
+        elif(a == b or b == c or c == a):
+            print('Right Isosceles Triangle')
+            return 'Right Isosceles'
+        else:
+            return 'Right'
+
+    if (a != b) and  (b != c) and (a != c):
         return 'Scalene'
-    else:
+    if(a == b or b == c or c == a):
+        print('Isosceles Triangle')
         return 'Isosceles'
+
+def getInput():
+    sides = input("Please enter the three sides of a triangle no less than 1 and no greater than 199. Seperate entries by spaces:")
+    return sides
+
+if __name__ == '__main__':
+    sides = getInput().split(' ')
+    a = float(sides[0])
+    b = float(sides[1])
+    c = float(sides[2])
+    classifyTriangle(a,b,c)
