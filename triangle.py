@@ -22,7 +22,7 @@ def check_input(side_a, side_b, side_c):
         side_b = float(side_b)
         side_c = float(side_c)
 
-    except:
+    except ValueError:
         # verify that all 3 inputs are integers
         # Python's "isinstance(object,type) returns True if the object is of the specified type
         float_double_a = isinstance(side_a, (float, int))
@@ -51,6 +51,8 @@ def check_input(side_a, side_b, side_c):
     if a_largest or b_largest or c_largest:
         print('The sides entered do not form a valid triangle')
         return 'InvalidInput'
+
+    return 'Valid'
 
 def classify_triangle(side_a, side_b, side_c):
     """
