@@ -16,7 +16,7 @@ from triangle import check_input
 # This code implements the unit test functionality
 # https://docs.python.org/3/library/unittest.html has a nice description of the framework
 
-class testTriangles(unittest.TestCase):
+class testTriangle(unittest.TestCase):
     # define multiple sets of tests as functions with names that begin
 
     def test_right_scalene_triangle_a(self):
